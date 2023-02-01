@@ -25,12 +25,15 @@ class ScoopAppDetailed {
 function Find-ScoopApp {
     [CmdletBinding()]
     param (
-        [Parameter()]
+        [Parameter(Position = 0,
+            ValueFromPipeline,
+            ValueFromPipelineByPropertyName)]
         [SupportsWildcards()]
         [string[]]
         $Name = '*',
 
-        [Parameter()]
+        [Parameter(Position = 1,
+            ValueFromPipelineByPropertyName)]
         [SupportsWildcards()]
         [string]
         $Bucket = '*'
@@ -74,6 +77,9 @@ function Find-ScoopApp {
 function Get-ScoopApp {
     [CmdletBinding()]
     param (
+        [Parameter(Position = 0,
+            ValueFromPipeline,
+            ValueFromPipelineByPropertyName)]
         [SupportsWildcards()]
         [ValidateNotNullOrEmpty()]
         [string[]]
@@ -342,6 +348,9 @@ function Uninstall-ScoopApp {
 function Get-ScoopBucket {
     [CmdletBinding()]
     param (
+        [Parameter(Position = 0,
+            ValueFromPipeline,
+            ValueFromPipelineByPropertyName)]
         [SupportsWildcards()]
         [ValidateNotNullOrEmpty()]
         [string[]]
