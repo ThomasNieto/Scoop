@@ -1,4 +1,4 @@
-# Copyright (c) Thomas Nieto - All Rights Reserved
+﻿# Copyright (c) Thomas Nieto - All Rights Reserved
 # You may use, distribute and modify this code under the
 # terms of the MIT license.
 
@@ -40,8 +40,8 @@ function Find-ScoopApp {
     )
 
     begin {
-        $bucketPath = Get-Command -Name Scoop | 
-        Select-Object -ExpandProperty Path | 
+        $bucketPath = Get-Command -Name Scoop |
+        Select-Object -ExpandProperty Path |
         Split-Path |
         Split-Path |
         Join-Path -ChildPath buckets
@@ -50,9 +50,9 @@ function Find-ScoopApp {
     process {
         foreach ($_name in $Name) {
             Get-ChildItem -Path (Join-Path -Path $bucketPath -ChildPath "$Bucket/bucket/$_name.json") |
-            ForEach-Object { 
-                $value = $_ | Get-Content | ConvertFrom-Json 
-            
+            ForEach-Object {
+                $value = $_ | Get-Content | ConvertFrom-Json
+
                 [ScoopAppDetailed]@{
                     Name        = $_.BaseName
                     Version     = $value.Version
@@ -134,7 +134,7 @@ function Install-ScoopApp {
     param (
         [Parameter(Mandatory,
             Position = 0,
-            ValueFromPipeline, 
+            ValueFromPipeline,
             ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()]
         [string[]]
@@ -165,7 +165,7 @@ function Install-ScoopApp {
         [switch]
         $SkipHashCheck
     )
-    
+
     process {
         foreach ($_name in $Name) {
             if ($PSCmdlet.ShouldProcess($_name)) {
@@ -186,7 +186,7 @@ function Install-ScoopApp {
                 if ($SkipHash) { $command += " --skip" }
 
                 Write-Verbose -Message $command
-                
+
                 Invoke-Expression $command 6>&1 |
                 ForEach-Object {
                     if ($_ -match '^ERROR') {
@@ -261,7 +261,7 @@ function Update-ScoopApp {
                 if ($NoCache) { $command += " --no-cache" }
                 if ($SkipHash) { $command += " --skip" }
                 if ($Force) { $command += " --force" }
-                
+
                 Invoke-Expression $command 6>&1 |
                 ForEach-Object {
                     if ($_ -match '^ERROR') {
@@ -302,7 +302,7 @@ function Uninstall-ScoopApp {
     param (
         [Parameter(Mandatory,
             Position = 0,
-            ValueFromPipeline, 
+            ValueFromPipeline,
             ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()]
         [string[]]
@@ -314,14 +314,14 @@ function Uninstall-ScoopApp {
         [switch]
         $Purge
     )
-    
+
     process {
         foreach ($_name in $Name) {
             if ($PSCmdlet.ShouldProcess($_name)) {
                 $command = "& scoop uninstall $_name"
                 if ($Global) { $command += " --global" }
                 if ($Purge) { $command += " --purge" }
-                
+
                 Invoke-Expression $command 6>&1 |
                 ForEach-Object {
                     if ($_ -match '^ERROR') {
@@ -356,11 +356,11 @@ function Get-ScoopBucket {
         [string[]]
         $Name = '*'
     )
-    
+
     begin {
         $sources = & scoop bucket list 6>$null
     }
-    
+
     process {
         foreach ($_name in $Name) {
             $sources |
@@ -389,7 +389,7 @@ function Get-ScoopBucket {
     Reregister the bucket if it already exists.
 #>
 function Register-ScoopBucket {
-    [CmdletBinding(DefaultParameterSetName = 'Name', 
+    [CmdletBinding(DefaultParameterSetName = 'Name',
         SupportsShouldProcess,
         ConfirmImpact = 'Low')]
     param (
@@ -399,7 +399,7 @@ function Register-ScoopBucket {
         [string]
         $Name,
 
-        [Parameter(Mandatory, 
+        [Parameter(Mandatory,
             ParameterSetName = 'Name',
             Position = 1)]
         [string]
@@ -467,7 +467,7 @@ function Unregister-ScoopBucket {
         [string]
         $Name
     )
-    
+
     if (-not (Get-ScoopBucket -Name $Name)) {
         throw "Bucket '$Name' does not exist."
     }

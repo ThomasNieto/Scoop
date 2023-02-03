@@ -1,4 +1,4 @@
-#Requires -Modules Scoop
+﻿#Requires -Modules Scoop
 
 Describe Get-ScoopBucket {
     BeforeAll {
@@ -8,7 +8,7 @@ Describe Get-ScoopBucket {
     AfterAll {
         & scoop bucket rm nirsoft 6>$null
     }
-    
+
     Context 'with no parameters' {
         It 'returns results' {
             Get-ScoopBucket | Should -Not -BeNullOrEmpty

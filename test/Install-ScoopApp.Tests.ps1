@@ -1,11 +1,11 @@
-#Requires -Modules Scoop
+﻿#Requires -Modules Scoop
 
 Describe Install-ScoopApp {
     AfterEach {
         & scoop uninstall 7zip *>$null
         & scoop uninstall ack *>$null
     }
-    
+
     Context 'with no additional parameters' {
         It 'single name' {
             { Install-ScoopApp -Name 7zip } | Should -Not -Throw

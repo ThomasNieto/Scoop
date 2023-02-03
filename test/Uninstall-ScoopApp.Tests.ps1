@@ -1,4 +1,4 @@
-#Requires -Modules Scoop
+﻿#Requires -Modules Scoop
 
 Describe Uninstall-ScoopApp {
     BeforeEach {
@@ -10,7 +10,7 @@ Describe Uninstall-ScoopApp {
         & scoop uninstall 7zip 6>$null
         & scoop uninstall ack 6>$null
     }
-    
+
     Context 'with -Name parameter' {
         It 'single name' {
             { Uninstall-ScoopApp -Name 7zip } | Should -Not -Throw
