@@ -259,7 +259,7 @@ function Update-ScoopApp {
                 if ($Global) { $command += " --global" }
                 if ($SkipDependencies) { $command += " --independent" }
                 if ($NoCache) { $command += " --no-cache" }
-                if ($SkipHash) { $command += " --skip" }
+                if ($SkipHashCheck) { $command += " --skip" }
                 if ($Force) { $command += " --force" }
 
                 Invoke-Expression $command 6>&1 |
