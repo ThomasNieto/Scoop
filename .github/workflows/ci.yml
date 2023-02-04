@@ -36,12 +36,13 @@ jobs:
           path: C:\Users\runneradmin\Documents\PowerShell\Modules\Scoop\
       - name: Install Scoop
         run: |
-          $env:Path
           Invoke-RestMethod get.scoop.sh -OutFile install.ps1
           .\install.ps1 -RunAsAdmin
+          refreshenv
+          $env:Path
+          Get-Command Scoop
       - name: Test with Pester
         run: |
-          $env:Path
           $ht = Import-PowerShellDataFile PesterSettings.psd1
           $config = New-PesterConfiguration $ht
           Invoke-Pester -Configuration $config
