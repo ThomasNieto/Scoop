@@ -38,7 +38,7 @@ jobs:
         run: |
           Invoke-RestMethod get.scoop.sh -OutFile 'install.ps1'
           .\install.ps1 -RunAsAdmin
-          refreshenv
+          Get-Command Scoop
       - name: Test with Pester
         run: Invoke-Pester
   Publish:
