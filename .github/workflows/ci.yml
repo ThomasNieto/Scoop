@@ -1,0 +1,56 @@
+name: CI
+
+defaults:
+  run:
+    shell: pwsh
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [ published ]
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Upload module
+        uses: actions/upload-artifact@v3
+        with:
+          name: module
+          path: ./src/
+  Test:
+    needs: Build
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Download module
+        uses: actions/download-artifact@v3
+        with:
+          name: module
+          path: C:\Users\runneradmin\Documents\PowerShell\Modules\Scoop\
+      - name: Install Scoop
+        run: |
+          Set-ExecutionPolicy RemoteSigned
+          Invoke-RestMethod get.scoop.sh | Invoke-Expression
+      - name: Test with Pester
+        run: Invoke-Pester
+  Publish:
+    needs: Test
+    if: github.event_name == 'release' && github.event.action == 'published'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download module
+        uses: actions/download-artifact@v3
+        with:
+          name: module
+          path: '~/.local/share/powershell/Modules/Scoop'
+      - name: Publish Module
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+        run: Publish-Module -Name Scoop -NuGetApiKey $env:NUGET_KEY
