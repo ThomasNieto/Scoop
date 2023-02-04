@@ -35,7 +35,9 @@ jobs:
           name: module
           path: C:\Users\runneradmin\Documents\PowerShell\Modules\Scoop\
       - name: Install Scoop
-        run: Invoke-RestMethod get.scoop.sh | Invoke-Expression
+        run: |
+        Invoke-RestMethod get.scoop.sh -OutFile scoop-install.ps1
+        .\scoop-install.ps1 -RunAsAdmin
       - name: Test with Pester
         run: Invoke-Pester
   Publish:
