@@ -38,9 +38,9 @@ jobs:
         run: |
           Invoke-RestMethod get.scoop.sh -OutFile install.ps1
           .\install.ps1 -RunAsAdmin
+          $env:Path += ';C:\Users\runneradmin\scoop\shims\'
       - name: Test with Pester
         run: |
-          $env:Path += ';C:\Users\runneradmin\scoop\shims\'
           $ht = Import-PowerShellDataFile PesterSettings.psd1
           $config = New-PesterConfiguration $ht
           Invoke-Pester -Configuration $config
