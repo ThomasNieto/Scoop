@@ -36,13 +36,13 @@ jobs:
           path: C:\Users\runneradmin\Documents\PowerShell\Modules\Scoop\
       - name: Install Scoop
         run: |
-          Invoke-RestMethod get.scoop.sh -OutFile 'install.ps1'
+          Invoke-RestMethod get.scoop.sh -OutFile install.ps1
           .\install.ps1 -RunAsAdmin
       - name: Test with Pester
         run: |
-        $ht = Import-PowerShellDataFile 'PesterSettings.psd1'
-        $config = New-PesterConfiguration $ht
-        Invoke-Pester -Configuration $config
+          $ht = Import-PowerShellDataFile PesterSettings.psd1
+          $config = New-PesterConfiguration $ht
+          Invoke-Pester -Configuration $config
   Publish:
     needs: Test
     if: github.event_name == 'release' && github.event.action == 'published'

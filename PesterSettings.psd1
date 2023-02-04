@@ -5,7 +5,4 @@
     Output     = @{
         Verbosity = 'Detailed'
     }
-    TestResult = @{
-        Enabled = $true
-    }
 }
