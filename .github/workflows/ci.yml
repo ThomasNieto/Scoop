@@ -35,9 +35,7 @@ jobs:
           name: module
           path: C:\Users\runneradmin\Documents\PowerShell\Modules\Scoop\
       - name: Install Scoop
-        run: |
-          Set-ExecutionPolicy RemoteSigned
-          Invoke-RestMethod get.scoop.sh | Invoke-Expression
+        run: Invoke-RestMethod get.scoop.sh | Invoke-Expression
       - name: Test with Pester
         run: Invoke-Pester
   Publish:
