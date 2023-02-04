@@ -1,0 +1,6 @@
+@{
+    ExcludeRules = @(
+        'PSAvoidUsingInvokeExpression',
+        'PSAvoidUsingPositionalParameters'
+    )
+}
