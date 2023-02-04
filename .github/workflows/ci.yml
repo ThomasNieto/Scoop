@@ -40,9 +40,7 @@ jobs:
           .\install.ps1 -RunAsAdmin
       - name: Test with Pester
         run: |
-          $ht = Import-PowerShellDataFile PesterSettings.psd1
-          $config = New-PesterConfiguration $ht
-          Invoke-Pester -Configuration $config
+          pwsh -Command { Invoke-Pester }
   Publish:
     needs: Test
     if: github.event_name == 'release' && github.event.action == 'published'
