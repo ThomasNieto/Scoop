@@ -46,6 +46,7 @@ jobs:
           Invoke-Pester -Configuration $config
   Sign:
     needs: Test
+    if: github.event_name == 'release' && github.event.action == 'published'
     runs-on: windows-latest
     steps:
       - name: Checkout Repository
@@ -77,7 +78,7 @@ jobs:
       - name: Upload module
         uses: actions/upload-artifact@v3
         with:
-          name: signed module
+          name: module-signed
           path: ./src/
   Publish:
     needs: Sign
@@ -87,7 +88,7 @@ jobs:
       - name: Download module
         uses: actions/download-artifact@v3
         with:
-          name: signed module
+          name: module-signed
           path: '~/.local/share/powershell/Modules/Scoop'
       - name: Publish Module
         env:
