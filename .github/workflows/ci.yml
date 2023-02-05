@@ -73,7 +73,7 @@ jobs:
           $config['FilePath'] = 'Scoop.cat'
           $config['Certificate'] = Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert
           Set-Location .\src
-          New-FileCatalog Scoop.cat
+          New-FileCatalog Scoop.cat -CatalogVersion 2
           Set-AuthenticodeSignature @config
       - name: Upload module
         uses: actions/upload-artifact@v3
