@@ -62,17 +62,17 @@ jobs:
           Import-PfxCertificate cert.pfx -Password $password -CertStoreLocation Cert:\CurrentUser\My
       - name: Sign files
         run: |
-          Set-Location .\src
           $config = Import-PowerShellDataFile SignSettings.psd1
           $config['Certificate'] = Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert
+          Set-Location .\src
           Set-AuthenticodeSignature @config
       - name: Create and sign catalog file
         run: |
-          Set-Location .\src
-          New-FileCatalog Scoop.cat
           $config = Import-PowerShellDataFile SignSettings.psd1
           $config['FilePath'] = 'Scoop.cat'
           $config['Certificate'] = Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert
+          Set-Location .\src
+          New-FileCatalog Scoop.cat
           Set-AuthenticodeSignature @config
       - name: Upload module
         uses: actions/upload-artifact@v3
