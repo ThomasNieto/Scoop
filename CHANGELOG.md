@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2023-2-5
+
+### Fixed
+
+- Sign module (#6/#7)
+
 ## [0.1.1] - 2023-1-31
 
 ### Added
@@ -18,5 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release
 
 [Unreleased]: https://github.com/ThomasNieto/Scoop/compare/v0.1.0...HEAD
+[0.1.2]: https://github.com/ThomasNieto/Scoop/releases/tag/v0.1.2
 [0.1.1]: https://github.com/ThomasNieto/Scoop/releases/tag/v0.1.1
 [0.1.0]: https://github.com/ThomasNieto/Scoop/releases/tag/v0.1.0
