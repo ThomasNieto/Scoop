@@ -40,11 +40,16 @@ function Find-ScoopApp {
     )
 
     begin {
-        $bucketPath = Get-Command -Name Scoop |
-        Select-Object -ExpandProperty Path |
-        Split-Path |
-        Split-Path |
-        Join-Path -ChildPath buckets
+        try {
+            $bucketPath = Get-Command -Name Scoop -CommandType ExternalScript -ErrorAction Stop |
+            Select-Object -ExpandProperty Path |
+            Split-Path |
+            Split-Path |
+            Join-Path -ChildPath buckets
+        }
+        catch {
+            throw $_
+        }
     }
 
     process {
