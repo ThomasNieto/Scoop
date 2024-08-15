@@ -7,6 +7,8 @@ class ScoopAppDetailed {
     [string] $Version
     [string] $Source
     [string] $Description
+    [string] $Homepage
+    [string[]] $Binaries
 }
 
 <#
@@ -24,6 +26,7 @@ class ScoopAppDetailed {
 #>
 function Find-ScoopApp {
     [CmdletBinding()]
+    [OutputType([ScoopAppDetailed])]
     param (
         [Parameter(Position = 0,
             ValueFromPipeline,
@@ -58,11 +61,21 @@ function Find-ScoopApp {
             ForEach-Object {
                 $value = $_ | Get-Content | ConvertFrom-Json
 
+                $binaries = if ($value.Bin) {
+                    $value.Bin |
+                    Where-Object { $_ -isnot [object[]] } |
+                    Split-Path -Leaf
+                } else {
+                    $null
+                }
+
                 [ScoopAppDetailed]@{
                     Name        = $_.BaseName
                     Version     = $value.Version
                     Source      = ($_.Directory | Split-Path -Parent | Split-Path -Leaf)
                     Description = $value.Description
+                    Binaries    = $binaries
+                    Homepage    = $value.Homepage
                 }
             }
         }
