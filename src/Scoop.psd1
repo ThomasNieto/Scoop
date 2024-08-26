@@ -5,7 +5,7 @@
     GUID = '7603664e-144c-4083-a51d-399df057a37d'
     Author = 'Thomas Nieto'
     Copyright = '(c) 2024 Thomas Nieto. All rights reserved.'
-    Description = 'An official PowerShell module for Scoop.'
+    Description = 'An unofficial PowerShell module for Scoop.'
     PowerShellVersion = '5.1'
     FunctionsToExport = @('Find-ScoopApp', 'Get-ScoopApp', 'Install-ScoopApp',
     'Update-ScoopApp', 'Uninstall-ScoopApp', 'Get-ScoopBucket',
