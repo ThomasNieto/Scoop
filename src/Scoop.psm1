@@ -105,7 +105,7 @@ function Get-ScoopApp {
     )
 
     begin {
-        $apps = & scoop list 6>$null
+        $apps = scoop list 6>$null
     }
 
     process {
@@ -191,21 +191,21 @@ function Install-ScoopApp {
                     $_name += "@$version"
                 }
 
-                $command = "& scoop install $_name"
+                $command = @('install', $_name)
 
                 if ($PSBoundParameters.ContainsKey('Architecture')) {
-                    $command += " --arch $Architecture"
+                    $command += "--arch $Architecture"
                 }
 
-                if ($Global) { $command += " --global" }
-                if ($SkipDependencies) { $command += " --independent" }
-                if ($NoCache) { $command += " --no-cache" }
-                if ($NoScoopUpdate) { $command += " --no-update-scoop" }
-                if ($SkipHash) { $command += " --skip" }
+                if ($Global) { $command += "--global" }
+                if ($SkipDependencies) { $command += "--independent" }
+                if ($NoCache) { $command += "--no-cache" }
+                if ($NoScoopUpdate) { $command += "--no-update-scoop" }
+                if ($SkipHash) { $command += "--skip" }
 
-                Write-Verbose -Message $command
+                Write-Verbose -Message "scoop $($command -join ' ')"
 
-                Invoke-Expression $command 6>&1 |
+                scoop @command 6>&1 |
                 ForEach-Object {
                     if ($_ -match '^ERROR') {
                         throw ($_ -replace '^ERROR ')
@@ -272,15 +272,17 @@ function Update-ScoopApp {
     process {
         foreach ($_name in $Name) {
             if ($PSCmdlet.ShouldProcess($_name)) {
-                $command = "& scoop update $_name"
+                $command = @('update', $_name)
 
-                if ($Global) { $command += " --global" }
-                if ($SkipDependencies) { $command += " --independent" }
-                if ($NoCache) { $command += " --no-cache" }
-                if ($SkipHashCheck) { $command += " --skip" }
-                if ($Force) { $command += " --force" }
+                if ($Global) { $command += "--global" }
+                if ($SkipDependencies) { $command += "--independent" }
+                if ($NoCache) { $command += "--no-cache" }
+                if ($SkipHashCheck) { $command += "--skip" }
+                if ($Force) { $command += "--force" }
 
-                Invoke-Expression $command 6>&1 |
+                Write-Verbose -Message "scoop $($command -join ' ')"
+
+                scoop @command 6>&1 |
                 ForEach-Object {
                     if ($_ -match '^ERROR') {
                         throw ($_ -replace '^ERROR ')
@@ -336,11 +338,14 @@ function Uninstall-ScoopApp {
     process {
         foreach ($_name in $Name) {
             if ($PSCmdlet.ShouldProcess($_name)) {
-                $command = "& scoop uninstall $_name"
-                if ($Global) { $command += " --global" }
-                if ($Purge) { $command += " --purge" }
+                $command = @('uninstall', $_name)
 
-                Invoke-Expression $command 6>&1 |
+                if ($Global) { $command += "--global" }
+                if ($Purge) { $command += "--purge" }
+
+                Write-Verbose -Message "scoop $($command -join ' ')"
+
+                scoop @command 6>&1 |
                 ForEach-Object {
                     if ($_ -match '^ERROR') {
                         throw ($_ -replace '^ERROR ')
@@ -376,7 +381,7 @@ function Get-ScoopBucket {
     )
 
     begin {
-        $sources = & scoop bucket list 6>$null
+        $sources = scoop bucket list 6>$null
     }
 
     process {
@@ -426,7 +431,7 @@ function Register-ScoopBucket {
         [Parameter(Mandatory,
             ParameterSetName = 'Official')]
         [ValidateScript({
-                if ($_ -in (& scoop bucket known)) {
+                if ($_ -in (scoop bucket known)) {
                     $true
                 }
                 else {
@@ -453,10 +458,10 @@ function Register-ScoopBucket {
 
     if ($PSCmdlet.ShouldProcess($Name)) {
         if ($existing) {
-            & scoop bucket rm $Name
+            scoop bucket rm $Name
         }
 
-        & scoop bucket add $Name $Uri 6>&1 |
+        scoop bucket add $Name $Uri 6>&1 |
         ForEach-Object {
             if ($_ -match '^ERROR') {
                 throw ($_ -replace '^ERROR ')
@@ -491,7 +496,7 @@ function Unregister-ScoopBucket {
     }
 
     if ($PSCmdlet.ShouldProcess($Name)) {
-        & scoop bucket rm $Name
+        scoop bucket rm $Name
     }
 
     if (Get-ScoopBucket -Name $Name) {
