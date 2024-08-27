@@ -12,11 +12,11 @@ Install-PSResource -Name Scoop
 
 ## Cmdlets
 
-* `Find-ScoopApp`
-* `Get-ScoopApp`
-* `Install-ScoopApp`
-* `Uninstall-ScoopApp`
-* `Update-ScoopApp`
-* `Get-ScoopBucket`
-* `Register-ScoopBucket`
-* `Unregister-ScoopBucket`
+- `Find-ScoopApp`
+- `Get-ScoopApp`
+- `Install-ScoopApp`
+- `Uninstall-ScoopApp`
+- `Update-ScoopApp`
+- `Get-ScoopBucket`
+- `Register-ScoopBucket`
+- `Unregister-ScoopBucket`
