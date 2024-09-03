@@ -30,7 +30,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Download module
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: module
           path: C:\Users\runneradmin\Documents\PowerShell\Modules\Scoop\
@@ -86,7 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download module
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: module-signed
           path: '~/.local/share/powershell/Modules/Scoop'
