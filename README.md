@@ -24,6 +24,7 @@ Install-PSResource -Name Scoop
 - `Find-ScoopApp`
 - `Get-ScoopApp`
 - `Install-ScoopApp`
+- `Optimize-ScoopApp`
 - `Uninstall-ScoopApp`
 - `Update-ScoopApp`
 - `Get-ScoopBucket`
