@@ -360,6 +360,74 @@ function Uninstall-ScoopApp {
 
 <#
     .SYNOPSIS
+    Optimizes Scoop apps.
+
+    .DESCRIPTION
+    Removes old versions of installed Scoop apps.
+
+    .PARAMETER Global
+    Cleanup a globally installed app.
+
+    .PARAMETER DownloadCache
+    Remove outdated download cache
+#>
+function Optimize-ScoopApp {
+    [CmdletBinding(SupportsShouldProcess)]
+    param (
+        [Parameter(Position = 0,
+            ValueFromPipeline,
+            ValueFromPipelineByPropertyName)]
+        [SupportsWildcards()]
+        [ValidateNotNullOrEmpty()]
+        [string[]]
+        $Name = '*',
+
+        [switch]
+        $Global,
+
+        [switch]
+        $DownloadCache
+    )
+
+    process {
+        foreach ($_name in $Name) {
+            foreach ($app in (Get-ScoopApp -Name $_name))
+            {
+                if ($PSCmdlet.ShouldProcess($app.Name)) {
+                    $command = @('cleanup', $app.Name)
+
+                    if ($Global) { $command += "--global" }
+                    if ($DownloadCache) { $command += "--cache" }
+
+                    Write-Verbose -Message "scoop $($command -join ' ')"
+
+                    scoop @command 6>&1 |
+                    ForEach-Object {
+                        if ($_ -match '^ERROR') {
+                            throw ($_ -replace '^ERROR ')
+                        }
+
+                        Write-Verbose -Message $_
+
+                        if ($_ -match 'Removing (?<name>.+): (?<versions>.+)')
+                        {
+                            $matches['versions'] -split ' ' |
+                            ForEach-Object {
+                                [ScoopAppDetailed]@{
+                                    Name = $Matches['name']
+                                    Version = $_
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+<#
+    .SYNOPSIS
     Get Scoop buckets.
 
     .DESCRIPTION
