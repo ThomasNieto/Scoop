@@ -8,7 +8,7 @@
     Description = 'An unofficial PowerShell module for Scoop.'
     PowerShellVersion = '5.1'
     FunctionsToExport = @('Find-ScoopApp', 'Get-ScoopApp', 'Install-ScoopApp',
-    'Update-ScoopApp', 'Uninstall-ScoopApp', 'Get-ScoopBucket',
+    'Optimize-ScoopApp', 'Update-ScoopApp', 'Uninstall-ScoopApp', 'Get-ScoopBucket',
     'Register-ScoopBucket', 'Unregister-ScoopBucket')
     CmdletsToExport = @()
     AliasesToExport = @()
