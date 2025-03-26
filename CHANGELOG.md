@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning][semver].
 
 ## [Unreleased]
 
+## [0.3.1] - 2025-3-25
+
+### Fixed
+
+- Fix architecture parameter (#26)
+
 ## [0.3.0] - 2025-3-22
 
 ### Added
@@ -50,7 +56,8 @@ and this project adheres to [Semantic Versioning][semver].
 
 - Initial release
 
-[Unreleased]: https://github.com/ThomasNieto/Scoop/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/ThomasNieto/Scoop/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/ThomasNieto/Scoop/releases/tag/v0.3.1
 [0.3.0]: https://github.com/ThomasNieto/Scoop/releases/tag/v0.3.0
 [0.2.1]: https://github.com/ThomasNieto/Scoop/releases/tag/v0.2.1
 [0.2.0]: https://github.com/ThomasNieto/Scoop/releases/tag/v0.2.0
