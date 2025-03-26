@@ -194,7 +194,8 @@ function Install-ScoopApp {
                 $command = @('install', $_name)
 
                 if ($PSBoundParameters.ContainsKey('Architecture')) {
-                    $command += "--arch $Architecture"
+                    $command += "--arch"
+                    $command += $Architecture
                 }
 
                 if ($Global) { $command += "--global" }
